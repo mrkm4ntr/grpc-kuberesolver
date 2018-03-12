@@ -26,13 +26,6 @@ public class KubernetesNameResolver extends NameResolver {
     private Listener listener;
     private Watch watch = null;
 
-    public KubernetesNameResolver(String namespace, String name, int port) {
-        this.namespace = namespace;
-        this.name = name;
-        this.port = port;
-        this.client = new DefaultKubernetesClient(Config.autoConfigure(null));
-    }
-
     public KubernetesNameResolver(Config config, String namespace, String name, int port) {
         this.namespace = namespace;
         this.name = name;

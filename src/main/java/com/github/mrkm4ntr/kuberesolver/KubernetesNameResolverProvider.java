@@ -1,6 +1,7 @@
 package com.github.mrkm4ntr.kuberesolver;
 
 import com.google.common.base.Preconditions;
+import io.fabric8.kubernetes.client.Config;
 import io.grpc.Attributes;
 import io.grpc.NameResolver;
 import io.grpc.NameResolverProvider;
@@ -11,6 +12,16 @@ import java.net.URI;
 public class KubernetesNameResolverProvider extends NameResolverProvider {
 
     private static final String SCHEME = "k8s";
+    private final Config config;
+
+    public KubernetesNameResolverProvider() {
+        this.config = Config.autoConfigure(null);
+    }
+
+    public KubernetesNameResolverProvider(Config config) {
+        this.config = config;
+    }
+
 
     @Override
     protected boolean isAvailable() {
@@ -37,7 +48,7 @@ public class KubernetesNameResolverProvider extends NameResolverProvider {
 
             try {
                 int port = Integer.valueOf(parts[3]);
-                return new KubernetesNameResolver(parts[1], parts[2], port);
+                return new KubernetesNameResolver(config, parts[1], parts[2], port);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Unable to parse port number", e);
             }

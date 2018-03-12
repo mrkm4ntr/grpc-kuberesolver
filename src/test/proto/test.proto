@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.github.mrkm4ntr.kuberesolver";
+
+message Count {}
+
+message Counted {
+    int32 counter = 1;
+}
+
+service Counter {
+    rpc CountIt(Count) returns (Counted);
+}
