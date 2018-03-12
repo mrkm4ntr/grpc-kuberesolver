@@ -1,4 +1,4 @@
-package com.github.mrkm4ntr;
+package com.github.mrkm4ntr.kuberesolver;
 
 import com.google.common.base.Preconditions;
 import io.grpc.Attributes;

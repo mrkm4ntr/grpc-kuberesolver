@@ -1,4 +1,4 @@
-package com.github.mrkm4ntr;
+package com.github.mrkm4ntr.kuberesolver;
 
 import io.fabric8.kubernetes.api.model.Endpoints;
 import io.fabric8.kubernetes.client.Config;
@@ -31,6 +31,13 @@ public class KubernetesNameResolver extends NameResolver {
         this.name = name;
         this.port = port;
         this.client = new DefaultKubernetesClient(Config.autoConfigure(null));
+    }
+
+    public KubernetesNameResolver(Config config, String namespace, String name, int port) {
+        this.namespace = namespace;
+        this.name = name;
+        this.port = port;
+        this.client = new DefaultKubernetesClient(config);
     }
 
     @Override
