@@ -46,6 +46,14 @@ public class KubernetesNameResolverProviderTest {
                                 .build())
                         .build())
                 .once();
+        k8sServer.expect().withPath("/api/v1/namespaces/default/endpoints?fieldSelector=metadata.name%3Dtest&watch=true")
+                .andReturn(200, new EndpointsBuilder().withSubsets(
+                        new EndpointSubsetBuilder()
+                                .withAddresses(new EndpointAddress(null, "127.0.0.1", null, null))
+                                .withPorts(new EndpointPort("test", DEFAULT_PORT, "tcp"))
+                                .build())
+                        .build())
+                .always();
         Config config = new ConfigBuilder(k8sServer.getClient().getConfiguration()).build();
         ManagedChannel channel = ManagedChannelBuilder.forTarget("k8s:///default/test/" + DEFAULT_PORT)
                 .nameResolverFactory(new KubernetesNameResolverProvider(config))

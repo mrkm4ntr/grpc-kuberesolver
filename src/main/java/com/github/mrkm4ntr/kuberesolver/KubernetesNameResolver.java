@@ -86,7 +86,6 @@ public class KubernetesNameResolver extends NameResolver {
                                 update(endpoints);
                                 return;
                             case DELETED:
-                                // TODO: remove only removed entries
                                 listener.onAddresses(Collections.emptyList(), Attributes.EMPTY);
                                 return;
                         }
@@ -94,8 +93,6 @@ public class KubernetesNameResolver extends NameResolver {
 
                     @Override
                     public void onClose(KubernetesClientException e) {
-                        // TODO: logging and test
-                        watch();
                     }
                 });
     }
